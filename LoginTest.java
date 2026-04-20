@@ -5,87 +5,75 @@
 package com.mycompany.registration;
 
 import java.util.Scanner;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayInputStream;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
-/**
- *
- * @author Student
- */
 public class LoginTest {
-    
-    public LoginTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
     }
 
-    /**
-     * Test of checkUserName method, of class Login.
-     */
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
+
     @Test
-    public void testCheckUserName() {
-        System.out.println("checkUserName");
-        String username = "";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkUserName(username);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testRegisterAndLogin() {
+        String simulatedInput = "myUser\nStrongPass123\n0123456789\n"; // username, password, phone
+        Scanner sc = new Scanner(new ByteArrayInputStream(simulatedInput.getBytes()));
+        
+        Login login = new Login();
+        login.register(sc);
+        
+        assertTrue(login.isUserRegistered("myUser"));
+        
+        // simulate login
+        String loginInput = "myUser\nStrongPass123\n";
+        Scanner scLogin = new Scanner(new ByteArrayInputStream(loginInput.getBytes()));
+        login.login(scLogin);
+        
+        assertTrue(login.isLoggedIn());
     }
 
-    /**
-     * Test of checkPassword method, of class Login.
-     */
     @Test
     public void testCheckPassword() {
-        System.out.println("checkPassword");
-        String password = "";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkPassword(password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Login login = new Login();
+        assertFalse(login.checkPassword("short"));
+        assertTrue(login.checkPassword("LongEnough123"));
     }
 
-    /**
-     * Test of checkPhone method, of class Login.
-     */
     @Test
     public void testCheckPhone() {
-        System.out.println("checkPhone");
-        String phone = "";
-        Login instance = new Login();
-        boolean expResult = false;
-        boolean result = instance.checkPhone(phone);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Login login = new Login();
+        assertFalse(login.checkPhone("123")); // too short
+        assertTrue(login.checkPhone("0123456789")); // correct
+    }
+
+    @Test
+    public void testCheckUserName() {
+        Login login = new Login();
+        assertFalse(login.checkUserName("a")); // too short
+        assertTrue(login.checkUserName("abc123")); // correct
     }
 
     /**
      * Test of register method, of class Login.
      */
-    @Test
+    @org.junit.Test
     public void testRegister() {
         System.out.println("register");
         Scanner sc = null;
@@ -98,7 +86,7 @@ public class LoginTest {
     /**
      * Test of login method, of class Login.
      */
-    @Test
+    @org.junit.Test
     public void testLogin() {
         System.out.println("login");
         Scanner sc = null;
@@ -107,5 +95,33 @@ public class LoginTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
+    /**
+     * Test of isUserRegistered method, of class Login.
+     */
+    @org.junit.Test
+    public void testIsUserRegistered() {
+        System.out.println("isUserRegistered");
+        String username = "";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.isUserRegistered(username);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isLoggedIn method, of class Login.
+     */
+    @org.junit.Test
+    public void testIsLoggedIn() {
+        System.out.println("isLoggedIn");
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.isLoggedIn();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
