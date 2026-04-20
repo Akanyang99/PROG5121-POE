@@ -1,4 +1,4 @@
-/*
+*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
@@ -11,41 +11,36 @@ import java.util.Scanner;
 
 
 public class Registration {
+
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
-        Login user = new Login();
+        Login login = new Login();
+        boolean running = true;
 
-        int choice;
-
-        do {
+        while (running) {
             System.out.println("\n=== MENU ===");
             System.out.println("1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.print("Choose option: ");
 
-            choice = sc.nextInt();
-            sc.nextLine(); // FIX for Scanner (important!)
+            String choice = sc.nextLine().trim();
 
             switch (choice) {
-                case 1:
-                    user.register(sc);
+                case "1":
+                    login.register(sc);
                     break;
-
-                case 2:
-                    user.login(sc);
+                case "2":
+                    login.login(sc);
                     break;
-
-                case 3:
-                    System.out.println("Goodbye!");
+                case "3":
+                    System.out.println("Exiting program...");
+                    running = false;
                     break;
-
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println("Invalid option. Please try again.");
             }
-
-        } while (choice != 3);
+        }
 
         sc.close();
     }
